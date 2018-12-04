@@ -15,7 +15,7 @@ public class PartTimeEmployee extends Employee {
     public int getHoursWorked() {
         return hoursWorked;
     }
-    
+
     public void setHoursWorked(int hoursWorked) {
         if (hoursWorked >= Employee.getFullTimeRequirement()) {
             setStatus("Full-Time");
@@ -25,6 +25,14 @@ public class PartTimeEmployee extends Employee {
 
     @Override
     public double calculateSalary() {
+        if (getStatus() == "Full-Time"){
+            super.calculateSalary(); 
+        }
+        
+        if (getSalary() <= 0.00){
+            //If there is no salary information available.
+            return 0.00;
+        }
         return getSalary() * getHoursWorked();
     }
 

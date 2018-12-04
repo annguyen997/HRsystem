@@ -1,102 +1,35 @@
 import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.util.Scanner;
-import java.io.FileInputStream;
-import java.io.File;
-import javax.swing.JFrame;
-import java.io.FileNotFoundException;
 
-public class HRSystem extends JFrame{
+public class HRSystem {
 
-    public static void main(String[] args)
-    {
-      JFileChooser fc = new JFileChooser();
-      FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt"); 
-      fc.setFileFilter(filter);
-      boolean isDone = false;
-      boolean fileFound = true;
-      String promptMsg = "HR System\nList of service(1-5)\n1. Add New Employee\n2. Remove Employee\n3. Edit Employee Info\n4. Display All\n5. Exit\n";
-      int chosenService;
-     
-
-      try
-      {  
-         int returnVal = fc.showOpenDialog(null);
-         if(returnVal == JFileChooser.APPROVE_OPTION) 
-         {
-            File file = fc.getSelectedFile();
-            Scanner read = new Scanner(new FileInputStream(file));
-         }
-         if(returnVal == JFileChooser.CANCEL_OPTION) 
-         {
-            fileFound = false;
-            JOptionPane.showMessageDialog(null, "File is not properly selected. Try it later.");
-         }           
-      }
-      catch(FileNotFoundException e)
-     {
-        fileFound = false;    
-         JOptionPane.showMessageDialog(null, "The file does not exist");
-         
-      } 
-     
-     if(fileFound)   
-     { 
-      while(!isDone)
-      {
-         try{
-            chosenService = Integer.parseInt(JOptionPane.showInputDialog(null, promptMsg));
-            if(chosenService < 1 || chosenService > 5)
-            {
-               throw new IllegalArgumentException("Invalid Range");
-            }
-            if(chosenService == 1)
-            {
-               addEmployee();
-            }
-            if(chosenService == 2)
-            {
-               removeEmployee();
-            }
-            if(chosenService == 3)
-            {
-               editEmployee();
-            }            
-            if(chosenService == 4)
-            {
-               displayAll();
-            }            
-            if(chosenService == 5)
-            {
-               isDone = true;
-            }
-         }
-         catch(NumberFormatException e)
-         {
-            JOptionPane.showMessageDialog(null, "Invalid Range.");
-         }                     
-         catch(IllegalArgumentException e)
-         {
-            JOptionPane.showMessageDialog(null, e);
-         }
-      } 
-     }
-    }
-
-    /** Add employee method if system needs to add a new employee not originally found in text file */
     public static void addEmployee(){
-    }
+        String firstName = JOptionPane.showInputDialog("Enter first name of employee: ");
+        String lastName = JOptionPane.showInputDialog("Enter last name of employee: ");
+        String status = JOptionPane.showInputDialog("Is " + firstName + " " + lastName + " a part-time or full-time employee?: ");
+        double salary = Integer.parseInt(JOptionPane.showInputDialog("Enter the salary?: "));
+        String title = JOptionPane.showInputDialog("Enter the title of position: ");
 
-    public static void removeEmployee(){
-    }    
+        /* String insurance = JOptionPane.showInputDialog("What is the insurance of + " firstName + " "
+                        + lastName + "?"); */
+        /* String department = JOptionPane.showInputDialog("Enter department of + firstName + " " + lastName + ": "); */
 
-    public static void editEmployee(){
-    }    
+        /* For part-time employees, this will instead indicate the hourly wage */
+        if (status == "Part-Time"){
+            
+        }
+        protected double salary;
+        protected String firstName;
+        protected String lastName;
+        /* Status indicates if the employee is a part-time or full-time employee */
+        protected String status;
+        protected Insurance insurance;
+        protected Department department;
+        protected String title;
 
-    public static void displayAll(){
-    }    
-
+    };
+    public static Employee removeEmployee(String employeeID){ return null;};
+    public static void editEmployee(String employeeID){};
+    public static String displayEmployees(){ return null;};
 
     /* Sorting methods */
     public static void alphabeticSort(){};

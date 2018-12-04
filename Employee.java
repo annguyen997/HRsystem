@@ -1,12 +1,11 @@
 public class Employee {
-    protected String employeeID;
+    protected int employeeID;
     /* For part-time employees, this will instead indicate the hourly wage */
     protected double salary;
     protected String firstName;
     protected String lastName;
     /* Status indicates if the employee is a part-time or full-time employee */
     protected String status;
-    protected Insurance insurance;
     protected Department department;
     protected String title;
 
@@ -14,7 +13,7 @@ public class Employee {
     protected static int numberOfEmployees = 0;  //May need to be reflected in requirement changes.
 
     /* The employee ID that automatically generates */
-    protected static int defaultEmployeeID = 00000100; //May need to be reflected in requirement changes.
+    protected static int defaultEmployeeID = 1; //May need to be reflected in requirement changes.
 
     /* Time requirement to be classified full time */
     private static final int fullTimeRequirement = 40;  //May need to be reflected in requirement changes.
@@ -22,13 +21,12 @@ public class Employee {
     public Employee(){}
 
     public Employee(double salary, String firstName, String lastName,
-                    String status, Insurance insurance, Department department, String title) {
+                    String status, Department department, String title) {
         this.employeeID = assignEmployeeID();
         this.salary = salary;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
-        this.insurance = insurance;
         this.department = department;
         this.title = title;
 
@@ -42,18 +40,18 @@ public class Employee {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", status='" + status + '\'' +
-                ", insurance=" + insurance +
+      
                 ", department=" + department +
                 ", title='" + title + '\'' +
                 '}';
     }
 
-    public String getEmployeeID() {
+    public int getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(String employeeID) throws IllegalArgumentException {
-        if (employeeID.length() > 8){
+    public void setEmployeeID(int employeeID) throws IllegalArgumentException {
+        if (employeeID > 8){
             throw new IllegalArgumentException();
         }
 
@@ -70,10 +68,10 @@ public class Employee {
         defaultEmployeeID += 1;
     }
 
-    public static String assignEmployeeID(){
+    public static int assignEmployeeID(){
          int idAssign = getDefaultEmployeeID();
          setDefaultEmployeeID();
-         return Integer.toString(idAssign);
+         return idAssign;
     }
 
     public double getSalary() {
@@ -111,13 +109,9 @@ public class Employee {
         this.status = status;
     }
 
-    public Insurance getInsurance() {
-        return insurance;
-    }
 
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
+
+  
 
     public Department getDepartment() {
         return department;

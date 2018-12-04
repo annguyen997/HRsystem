@@ -39,11 +39,7 @@ public class Department {
      * @param name - name of the department
      * @param manager - manager of the department
      * */
-    public Department(String name, Employee manager){
-        this.name = name;
-        this.manager = manager;
-        numberOfDepartments++;
-    }
+
 
     /** Department constructor with department name, department description, and manager provided
      *
@@ -51,12 +47,7 @@ public class Department {
      * @param manager - manager of the department
      * @param description - description of the department
      * */
-    public Department(String name, Employee manager, String description){
-        this.name = name;
-        this.manager = manager;
-        this.description = description;
-        numberOfDepartments++;
-    }
+ 
 
     /** Get the name of department
      *
@@ -115,8 +106,8 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "name='" + name + '\'' +
-                ", manager=" + manager +
-                ", description='" + description + '\'' +
+               
+               
                 '}';
     }
 }

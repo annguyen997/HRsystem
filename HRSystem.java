@@ -1,3 +1,9 @@
+/**
+ * HR CLASS: IMPLEMENTATION
+ * @author Han Jang
+ * G00783205
+ * hjang25@masonlive.gmu.edu
+ */
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,16 +22,16 @@ public class HRSystem extends JFrame{
 
     public static void main(String[] args)
     {
-      JFileChooser fc = new JFileChooser();
+      JFileChooser fc = new JFileChooser(); //GUI
       FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt"); 
-      fc.setFileFilter(filter);
-      boolean isDone = false;
-      boolean fileFound = false;
+      fc.setFileFilter(filter); //FILTER FOR TXT FILE
+      boolean isDone = false; //USER IS DONE
+      boolean fileFound = false; 
       String promptMsg = "HR System\nList of service(1-5)\n1. Add New Employee\n2. Remove Employee\n3. Edit Employee Info\n4. Display All\n5. Exit\n";
-      int chosenService;
+      int chosenService; //CHOSEN SERVICE
       String fileName = null;
       
-      //Initial setting to test
+      //Initial setting for test
       Insurance[] insurances = {new Insurance("PlanA", 100), new Insurance("PlanB", 200), new Insurance("PlanC", 300)};
       Department[] departments = {new Department("HR", "Human_Resource"), new Department("IT", "Information_Technology"), new Department("BS", "Business")};
       
@@ -40,14 +46,14 @@ public class HRSystem extends JFrame{
          JOptionPane.showMessageDialog(null, "File is not properly selected. Try it later.");
       }           
 
-     //Scanner read = new Scanner(new FileInputStream(file));     
+          
      if(fileFound)   
      { 
-      while(!isDone)
+      while(!isDone)//loops until user is done
       {
          try{
             chosenService = Integer.parseInt(JOptionPane.showInputDialog(null, promptMsg));
-            if(chosenService < 1 || chosenService > 5)
+            if(chosenService < 1 || chosenService > 5) //service range
             {
                throw new IllegalArgumentException("Invalid Service Range");
             }
@@ -93,7 +99,12 @@ public class HRSystem extends JFrame{
      }
     }
 
-    /** Add employee method if system needs to add a new employee not originally found in text file */
+	/**
+	 * The method adds employee to the system
+	 * @param file file name
+	 * @param insurances pre-defined insurance list	
+	 * @param departments pre-defined department list
+    */  
     public static void addEmployee(String file, Insurance[] insurances, Department[] departments) throws FileNotFoundException
     {
       int id;
@@ -136,14 +147,14 @@ public class HRSystem extends JFrame{
       }
       
       insuranceName = JOptionPane.showInputDialog(null, "Enter the insurance plan{PlanA,PlanB,PlanC}: ");
-      insurance = verifyInsurance(insuranceName, insurances);
+      insurance = verifyInsurance(insuranceName, insurances); //return the matching insurance object with the insurance name
       if(insurance == null)
          throw new IllegalArgumentException("Inserted insurance plan does not exist");
       departmentName = JOptionPane.showInputDialog(null, "Enter the department{HR,IT,BS}: ");                              
-      department = verifyDepartment(departmentName, departments);
+      department = verifyDepartment(departmentName, departments); //return the matching department object with the department name
       if(department == null)
          throw new IllegalArgumentException("Inserted department does not exist");
-      if(isFulltime)
+      if(isFulltime)//depends on the user's case, different object is created
       {
          Employee newEmployee = new Employee(id, salary, fName, lName, isFulltime, insurance, department);
       }
@@ -154,18 +165,23 @@ public class HRSystem extends JFrame{
             throw new IllegalArgumentException("work-hours cannot be negative");
          PartTimeEmployee newEmployee = new PartTimeEmployee(id, salary, fName, lName, isFulltime, insurance, department, hoursWorked);
       }
+      // record to be save in txt file
       msg = id + " " + salary + " " + fName + " " + lName + " " + isFulltime + " " + insurance.getPlanName() + " " + insurance.getAmount() + " "  + 
             department.getName() + " " + department.getDescription() + "\n";
             
       
-            
+      // new entry is saved in the txt file.      
       PrintWriter wr = new PrintWriter(new FileOutputStream(new File(file), true));
       wr.print(msg);
       wr.close();
             
     }
    
-   
+	/**
+	 * The method checks if the id is duplicated employee id
+	 * @param id employee id being tested
+	 * @param file storage file
+    */     
     public static boolean verifyID(int id, String file) throws FileNotFoundException
     {
       Scanner read = new Scanner(new FileInputStream(new File(file)));
@@ -187,15 +203,20 @@ public class HRSystem extends JFrame{
          if(idTokens == id)
          {
             read.close();
-            return false;
+            return false; //dupe is found
          }
       }
       
       read.close();
       
-      return true;
+      return true; // no dupe exist
     }
-      
+    
+	/**
+	 * The method returns matching insurance to the given name
+	 * @param insuranceName passed name for matching
+	 * @param insurances list of insurances
+    */       
     public static Insurance verifyInsurance(String insuranceName, Insurance[] insurances)
     {
       if(insurances[0].getPlanName().equalsIgnoreCase(insuranceName))
@@ -214,6 +235,11 @@ public class HRSystem extends JFrame{
       return null;          
     }
 
+	/**
+	 * The method returns matching department to the given name
+	 * @param departmentName passed name for matching
+	 * @param departments list of departments
+    */       
     public static Department verifyDepartment(String departmentName, Department[] departments)
     {
       if(departments[0].getName().equalsIgnoreCase(departmentName))
@@ -232,12 +258,16 @@ public class HRSystem extends JFrame{
       return null;      
     }
 
+	/**
+	 * The method removes employee
+	 * @param file system storage
+    */       
     public static void removeEmployee(String file) throws FileNotFoundException
     {
-      int removingID;
+      int removingID; // id that needs to be removed
       String record;
       Scanner lineForScan;
-      String filteredContent = "";
+      String filteredContent = ""; // content after removal
       boolean isRemoved = false;
       int count = 0;
       
@@ -258,23 +288,23 @@ public class HRSystem extends JFrame{
          comparedID = Integer.parseInt(lineForScan.next());
 
         
-         if(comparedID == removingID)
+         if(comparedID == removingID) // check if the id is found
          {
             isRemoved = true;
          }
-         else if(count == 0)
+         else if(count == 0) // for the first record, different operation is required for txt file organization
          {
             count++;
-            filteredContent = record; 
+            filteredContent = record; //unmatching record will be saved         
          }
          else 
          {
-            filteredContent = filteredContent + "\n" + record;          
+            filteredContent = filteredContent + "\n" + record;//unmatching record will be saved                   
          }
          
          lineForScan.close();
       }
-      if(isRemoved)
+      if(isRemoved)// confirm message
       {
          JOptionPane.showMessageDialog(null, "The record is successfully removed");
       }
@@ -284,12 +314,18 @@ public class HRSystem extends JFrame{
       }         
 
       read.close();
-      
+      // write the result to the txt file
       PrintWriter wr = new PrintWriter(new FileOutputStream(new File(file)));
       wr.println(filteredContent);
       wr.close();      
     }    
 
+	/**
+	 * The method edits the txt file
+	 * @param file file name
+	 * @param insurances pre-defined insurance list	
+	 * @param departments list of departments
+    */       
     public static void editEmployee(String file, Insurance[] insurances, Department[] departments) throws FileNotFoundException
     {
       int editingID;
@@ -320,25 +356,25 @@ public class HRSystem extends JFrame{
          record = read.nextLine();          
          lineForScan = new Scanner(record);
          
-         if(lineForScan.hasNext() && Integer.parseInt(lineForScan.next()) == editingID)
+         if(lineForScan.hasNext() && Integer.parseInt(lineForScan.next()) == editingID)//match found
          {
             matchFound = true;
          }
-         else if(count == 0)
+         else if(count == 0) // first line treated different due to better organization in txt file
          {
-            changedContent = record;
+            changedContent = record; //unmatching record will be saved         
             count++;
          }
          else
          {
-            changedContent = changedContent + "\n" + record;         
+            changedContent = changedContent + "\n" + record; //unmatching record will be saved         
          }       
          lineForScan.close();   
       }
       read.close();
       
       
-      if(matchFound)
+      if(matchFound) // once match is found edit is going to be overwritten
       {
          salary = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter the salary(edit): "));
          if(salary < 0)
@@ -386,16 +422,23 @@ public class HRSystem extends JFrame{
          throw new IllegalArgumentException("The inserted ID does not exist in the system");
       }
       
+      //overwrite the txt file
       PrintWriter wr = new PrintWriter(new FileOutputStream(new File(file)));
       wr.println(changedContent);
       wr.close();
 
     }    
 
+	/**
+	 * The method that displays the sorted data
+	 * @param file file name
+	 * @param insurances pre-defined insurance list	
+	 * @param departments list of departments
+    */    
     public static void displayAll(String file, Insurance[] insurances, Department[] departments) throws FileNotFoundException
     {
-      ArrayList<Employee> employees = new ArrayList<Employee>();
-      String sortMethod = "";
+      ArrayList<Employee> employees = new ArrayList<Employee>(); // array list is added for sort
+      String sortMethod = ""; // specified sort method
       int id;
       double salary;
       String fName;
@@ -409,7 +452,7 @@ public class HRSystem extends JFrame{
       
       Scanner read = new Scanner(new FileInputStream(new File(file)));
       
-      while(read.hasNext())
+      while(read.hasNext()) // complete the ArrayList
       {
          id = Integer.parseInt(read.next());
          salary = Double.parseDouble(read.next());
@@ -427,6 +470,8 @@ public class HRSystem extends JFrame{
       read.close();
       
       sortMethod = JOptionPane.showInputDialog(null, "Choose the sorting method {name, salary, insurance, department}:");
+     
+      //depends on the chosen method, different comparable class is used.
       if(sortMethod.equalsIgnoreCase("name"))
       {
          employees.sort(new CompareName());
@@ -448,6 +493,7 @@ public class HRSystem extends JFrame{
          throw new IllegalArgumentException("Invalid sorting method");
       }
       
+      //iterator for output.
       Iterator it = employees.iterator(); //iterator object is created for iteration
       while(it.hasNext())
       {

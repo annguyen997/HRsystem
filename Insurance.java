@@ -1,8 +1,6 @@
 public class Insurance {
     private String planName;
     private int amount;
-    /* Indicates the number of people using this plan. This may need to be reflected in the requirements log*/
-    private int members;
 
     public Insurance(String planName, int amount){
         this.planName = planName;
@@ -24,10 +22,6 @@ public class Insurance {
 
     public void setPlanName(String planName) {
         this.planName = planName;
-    }
-
-    public int getMembers() {
-        return members;
     }
 
     @Override

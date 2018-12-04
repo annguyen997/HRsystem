@@ -2,6 +2,7 @@ import javax.swing.JOptionPane;
 
 public class HRSystem {
 
+    /** Add employee method if system needs to add a new employee not originally found in text file */
     public static void addEmployee(){
         String firstName = JOptionPane.showInputDialog("Enter first name of employee: ");
         String lastName = JOptionPane.showInputDialog("Enter last name of employee: ");
@@ -15,17 +16,10 @@ public class HRSystem {
 
         /* For part-time employees, this will instead indicate the hourly wage */
         if (status == "Part-Time"){
-            
+            Employee partTimeEmployee = new PartTimeEmployee();
+        } else {
+            Employee employee = new Employee();
         }
-        protected double salary;
-        protected String firstName;
-        protected String lastName;
-        /* Status indicates if the employee is a part-time or full-time employee */
-        protected String status;
-        protected Insurance insurance;
-        protected Department department;
-        protected String title;
-
     };
     public static Employee removeEmployee(String employeeID){ return null;};
     public static void editEmployee(String employeeID){};

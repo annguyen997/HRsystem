@@ -1,2 +1,6 @@
 
 2 1.0 1 1 true PlanA 100 BS Business
+1 1200.0 han jang true PlanA 100 HR Human_Resource
+5 5000.0 jee jun true PlanB 200 BS Business
+12 100.0 lll ies true PlanC 300 BS Business
+123 2000.0 jessica jun true PlanA 100 IT Information_Technology

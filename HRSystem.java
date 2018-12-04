@@ -10,6 +10,7 @@ import java.io.EOFException;
 import javax.swing.JFrame;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class HRSystem extends JFrame{
 
@@ -65,7 +66,7 @@ public class HRSystem extends JFrame{
             }            
             if(chosenService == 4)
             {
-               displayAll(fileName);
+               displayAll(fileName, insurances, departments);
             }            
             if(chosenService == 5)
             {
@@ -366,11 +367,68 @@ public class HRSystem extends JFrame{
 
     }    
 
-    public static void displayAll(String fileName)
+    public static void displayAll(String file, Insurance[] insurances, Department[] departments) throws FileNotFoundException
     {
-      ArrayList<Employee> employees;
+      ArrayList<Employee> employees = new ArrayList<Employee>();
+      String sortMethod = "";
+      int id;
+      double salary;
+      String fName;
+      String lName;
+      boolean isFulltime;
+      String plan;
+      int amount;
+      String department;
+      String departDescription;
+      Employee employee;
       
+      Scanner read = new Scanner(new FileInputStream(new File(file)));
       
+      while(read.hasNext())
+      {
+         id = Integer.parseInt(read.next());
+         salary = Double.parseDouble(read.next());
+         fName = read.next();
+         lName = read.next();
+         isFulltime = Boolean.parseBoolean(read.next());
+         plan = read.next();
+         amount = Integer.parseInt(read.next());
+         department = read.next();
+         departDescription = read.next();
+         
+         employees.add(new Employee(id, salary, fName, lName, isFulltime, verifyInsurance(plan, insurances), verifyDepartment(department, departments)));
+      }
+
+      read.close();
+      
+      sortMethod = JOptionPane.showInputDialog(null, "Choose the sorting method {name, salary, insurance, department}:");
+      if(sortMethod.equalsIgnoreCase("name"))
+      {
+         employees.sort(new CompareName());
+      }
+      else if(sortMethod.equalsIgnoreCase("salary"))
+      {
+         employees.sort(new CompareSalary());      
+      }      
+      else if(sortMethod.equalsIgnoreCase("insurance"))
+      {
+         employees.sort(new CompareInsuranceAmount());      
+      }      
+      else if(sortMethod.equalsIgnoreCase("department"))
+      {
+         employees.sort(new CompareDepartment());      
+      }      
+      else
+      {
+         throw new IllegalArgumentException("Invalid sorting method");
+      }
+      
+      Iterator it = employees.iterator(); //iterator object is created for iteration
+      while(it.hasNext())
+      {
+         //down casting to print the data of the users
+         System.out.println(((Employee)it.next()).toString() + "\n");
+      }
     }    
 
 }

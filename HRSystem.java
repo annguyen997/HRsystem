@@ -286,7 +286,6 @@ public class HRSystem extends JFrame{
          lineForScan = new Scanner(record);
         
          comparedID = Integer.parseInt(lineForScan.next());
-
         
          if(comparedID == removingID) // check if the id is found
          {

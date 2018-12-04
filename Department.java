@@ -1,4 +1,4 @@
-/**
+**
  * The Department class that contains department name, name of manager - an Employee object,
  * and description of the department
  *
@@ -14,12 +14,7 @@ public class Department {
     /* The description of the department */
     private String description;
 
-    /* The number of employees in this department
-    * This may need to be reflected in requirements logs*/
-    private int numberOfEmployees;
-
-    /* The number of Department objects available in the application (i.e. company)
-     * This may need to be reflected in requirements logs*/
+    /* The number of Department objects available in the application (i.e. company) */
     private static int numberOfDepartments;
 
     /* Default Department constructor */
@@ -39,7 +34,12 @@ public class Department {
      * @param name - name of the department
      * @param manager - manager of the department
      * */
-
+    public Department(String name, Employee manager){
+        if(manager instanceof Employee)
+        this.name = name;
+        this.manager = manager;
+        numberOfDepartments++;
+    }
 
     /** Department constructor with department name, department description, and manager provided
      *
@@ -47,7 +47,12 @@ public class Department {
      * @param manager - manager of the department
      * @param description - description of the department
      * */
- 
+    public Department(String name, Employee manager, String description){
+        this.name = name;
+        this.manager = manager;
+        this.description = description;
+        numberOfDepartments++;
+    }
 
     /** Get the name of department
      *
@@ -97,6 +102,13 @@ public class Department {
         this.description = description;
     }
 
+    /** Get the number of departments available in company
+     * @return return the number of departments created.
+     */
+    public int getNumberOfDepartments(){
+        return numberOfDepartments;
+    }
+
     /** Print the department and its attributes
      *
      *
@@ -106,8 +118,8 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "name='" + name + '\'' +
-               
-               
+                ", manager=" + manager +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

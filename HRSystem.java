@@ -495,11 +495,14 @@ public class HRSystem extends JFrame{
       
       //iterator for output.
       Iterator it = employees.iterator(); //iterator object is created for iteration
+      String msg = "REPORT: \n";
       while(it.hasNext())
       {
+
          //down casting to print the data of the users
-         System.out.println(((Employee)it.next()).toString() + "\n");
+         msg += (((Employee)it.next()).toString() + "\n");
       }
+      JOptionPane.showMessageDialog(null, msg);
     }    
 
 }

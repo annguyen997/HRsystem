@@ -1,3 +1,10 @@
+/**
+ * The Employee class that contains employee information including full/part time status, insurance, department
+ * position name, salary information, and employee ID.
+ *
+ * @author An Nguyen
+ */
+
 public class Employee {
     protected int employeeID;
     /* For part-time employees, this will instead indicate the hourly wage */
@@ -6,6 +13,7 @@ public class Employee {
     protected String lastName;
     /* Status indicates if the employee is a part-time or full-time employee */
     protected String status;
+    protected Insurance insurance;
     protected Department department;
     protected String title;
 
@@ -18,18 +26,21 @@ public class Employee {
     /* Time requirement to be classified full time */
     private static final int fullTimeRequirement = 40;  //May need to be reflected in requirement changes.
 
-    public Employee(){}
+    public Employee(){
+        setNumberOfEmployees();
+    }
 
     public Employee(double salary, String firstName, String lastName,
-                    String status, Department department, String title) {
+                    String status, Insurance insurance, Department department, String title) {
         this.employeeID = assignEmployeeID();
         this.salary = salary;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
+        this.insurance = insurance;
         this.department = department;
         this.title = title;
-
+        setNumberOfEmployees();
     }
 
     @Override
@@ -40,10 +51,18 @@ public class Employee {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", status='" + status + '\'' +
-      
+                ", insurance=" + insurance +
                 ", department=" + department +
                 ", title='" + title + '\'' +
                 '}';
+    }
+
+    /** Calls the toString() method of an employee instance
+     * in a more callable format.
+     * @return the string of the employee information.
+     */
+    public String reportEmployeeInfo(){
+        return toString();
     }
 
     public int getEmployeeID() {
@@ -57,8 +76,6 @@ public class Employee {
 
         this.employeeID = employeeID;
     }
-
-    /* These three methods may need to be added into the requirements log */
 
     public static int getDefaultEmployeeID(){
         return defaultEmployeeID;
@@ -82,7 +99,12 @@ public class Employee {
         if (salary <= 0.00){
             throw new IllegalArgumentException("The salary value is too low.");
         }
-        this.salary = salary;
+
+        try {
+            this.salary = salary;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public String getFirstName() {
@@ -105,20 +127,44 @@ public class Employee {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String status) throws IllegalArgumentException {
+        if (status == "Part-Time" || status == "Full=Time") {
+            this.status = status;
+        } else {
+            throw new IllegalArgumentException("Invalid status set. Please enter 'Part-Time' or 'Full-Time'");
+        }
     }
 
+    public Insurance getInsurance() {
+        return insurance;
+    }
 
+    public void setInsurance(Insurance insurance) throws IllegalArgumentException{
+        if (insurance == null){
+            throw new IllegalArgumentException("There is no Insurance object available.");
+        }
 
-  
+        try {
+            this.insurance = insurance;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartment(Department department) throws IllegalArgumentException{
+        if (department == null){
+            throw new IllegalArgumentException("There is no Insurance object available.");
+        }
+
+        try {
+            this.department = department;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTitle() {
@@ -126,7 +172,12 @@ public class Employee {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        try {
+            this.title = title;
+        } catch (Exception e){
+            System.out.println("Invalid title name.");
+            e.printStackTrace();
+        }
     }
 
     public double calculateSalary(){
@@ -138,7 +189,12 @@ public class Employee {
         return 0.00;
     }
 
-    /* These three methods may need to be reflected in the requirements log */
+    public String printPaycheck(){
+        return "First Name: " + getFirstName() +
+                " Last Name: " + getLastName() +
+                " Total Pay: " + calculateSalary();
+    }
+
     public static int getNumberOfEmployees(){
         return numberOfEmployees;
     }
@@ -147,11 +203,14 @@ public class Employee {
         numberOfEmployees += 1;
     }
 
+    public static void reduceNumberOfEmployees(){
+        numberOfEmployees -= 1;
+    }
+
     public static void resetNumberOfEmployees(){
         numberOfEmployees = 0;
     }
 
-    /* This method may need to be reflected in requirements log */
     public static int getFullTimeRequirement(){
         return fullTimeRequirement;
     }

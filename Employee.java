@@ -1,37 +1,34 @@
 public class Employee {
-    protected String employeeID;
+    protected int employeeID;
     /* For part-time employees, this will instead indicate the hourly wage */
     protected double salary;
     protected String firstName;
     protected String lastName;
     /* Status indicates if the employee is a part-time or full-time employee */
-    protected String status;
+    protected boolean isFulltime;
     protected Insurance insurance;
     protected Department department;
-    protected String title;
 
     /* Indicates the number of employees objects */
     protected static int numberOfEmployees = 0;  //May need to be reflected in requirement changes.
 
     /* The employee ID that automatically generates */
-    protected static int defaultEmployeeID = 00000100; //May need to be reflected in requirement changes.
+    protected static int defaultEmployeeID = 0; //May need to be reflected in requirement changes.
 
     /* Time requirement to be classified full time */
     private static final int fullTimeRequirement = 40;  //May need to be reflected in requirement changes.
 
     public Employee(){}
 
-    public Employee(double salary, String firstName, String lastName,
-                    String status, Insurance insurance, Department department, String title) {
-        this.employeeID = assignEmployeeID();
+    public Employee(int id, double salary, String firstName, String lastName,
+                    boolean isFulltime, Insurance insurance, Department department) {
+        this.employeeID = id;
         this.salary = salary;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.status = status;
+        this.isFulltime = isFulltime;
         this.insurance = insurance;
         this.department = department;
-        this.title = title;
-
     }
 
     @Override
@@ -41,23 +38,14 @@ public class Employee {
                 ", salary=" + salary +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", status='" + status + '\'' +
-                ", insurance=" + insurance +
-                ", department=" + department +
-                ", title='" + title + '\'' +
+                ", isFulltime='" + isFulltime + '\'' +
+                ", insurance=" + insurance + '\'' +
+                ", department=" + department + '\'' +
                 '}';
     }
 
-    public String getEmployeeID() {
+    public int getEmployeeID() {
         return employeeID;
-    }
-
-    public void setEmployeeID(String employeeID) throws IllegalArgumentException {
-        if (employeeID.length() > 8){
-            throw new IllegalArgumentException();
-        }
-
-        this.employeeID = employeeID;
     }
 
     /* These three methods may need to be added into the requirements log */
@@ -103,12 +91,12 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean getStatus() {
+        return isFulltime;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(boolean isFulltime) {
+        this.isFulltime = isFulltime;
     }
 
     public Insurance getInsurance() {
@@ -127,14 +115,6 @@ public class Employee {
         this.department = department;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public double calculateSalary(){
         if (getSalary() > 0.0){
             //There are 52 weeks in a year, so a full time employee will get supposedly 26 paychecks
@@ -147,10 +127,6 @@ public class Employee {
     /* These three methods may need to be reflected in the requirements log */
     public static int getNumberOfEmployees(){
         return numberOfEmployees;
-    }
-
-    public static void setNumberOfEmployees(){
-        numberOfEmployees += 1;
     }
 
     public static void resetNumberOfEmployees(){

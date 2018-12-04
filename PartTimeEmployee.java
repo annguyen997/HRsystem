@@ -5,10 +5,10 @@ public class PartTimeEmployee extends Employee {
 
     public PartTimeEmployee(){};
 
-    public PartTimeEmployee(double salary, String firstName, String lastName,
-                            String status, Insurance insurance, Department department, String title,
+    public PartTimeEmployee(int id, double salary, String firstName, String lastName,
+                            boolean isFulltime, Insurance insurance, Department department,
                             int hoursWorked){
-        super(salary, firstName, lastName, status, insurance, department, title);
+        super(id, salary, firstName, lastName, isFulltime, insurance, department);
         this.hoursWorked = hoursWorked;
     }
 
@@ -20,7 +20,7 @@ public class PartTimeEmployee extends Employee {
     //What if a part-time employee becomes full time?
     public void setHoursWorked(int hoursWorked) {
         if (hoursWorked >= Employee.getFullTimeRequirement()) {
-            setStatus("Full-Time");
+            setStatus(true);
             //Find a way to possibly reclassify this object into an Employee object as this person is no longer
             //a part-time employee.
         }
@@ -39,10 +39,9 @@ public class PartTimeEmployee extends Employee {
                 ", salary=" + salary +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", status='" + status + '\'' +
+                ", isFulltime='" + isFulltime + '\'' +
                 ", insurance=" + insurance +
                 ", department=" + department +
-                ", title='" + title + '\'' +
                 "hoursWorked=" + hoursWorked +
                 '}';
     }

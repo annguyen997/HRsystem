@@ -39,9 +39,9 @@ public class Department {
      * @param name - name of the department
      * @param manager - manager of the department
      * */
-    public Department(String name, Employee manager){
+    public Department(String name, String description){
         this.name = name;
-        this.manager = manager;
+        this.description = description;
         numberOfDepartments++;
     }
 

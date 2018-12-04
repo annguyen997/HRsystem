@@ -49,7 +49,7 @@ public class HRSystem extends JFrame{
             chosenService = Integer.parseInt(JOptionPane.showInputDialog(null, promptMsg));
             if(chosenService < 1 || chosenService > 5)
             {
-               throw new IllegalArgumentException("Invalid Range");
+               throw new IllegalArgumentException("Invalid Service Range");
             }
             if(chosenService == 1)
             {
@@ -75,8 +75,12 @@ public class HRSystem extends JFrame{
          }
          catch(NumberFormatException e)
          {
-            JOptionPane.showMessageDialog(null, "Invalid Range.");
-         }                     
+            JOptionPane.showMessageDialog(null, "Invalid Range");
+         }
+         catch(NullPointerException e)
+         {
+            JOptionPane.showMessageDialog(null, "Empty value");
+         }                                                   
          catch(IllegalArgumentException e)
          {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -151,10 +155,12 @@ public class HRSystem extends JFrame{
          PartTimeEmployee newEmployee = new PartTimeEmployee(id, salary, fName, lName, isFulltime, insurance, department, hoursWorked);
       }
       msg = id + " " + salary + " " + fName + " " + lName + " " + isFulltime + " " + insurance.getPlanName() + " " + insurance.getAmount() + " "  + 
-            department.getName() + " " + department.getDescription();
+            department.getName() + " " + department.getDescription() + "\n";
+            
+      
             
       PrintWriter wr = new PrintWriter(new FileOutputStream(new File(file), true));
-      wr.println(msg);
+      wr.print(msg);
       wr.close();
             
     }
@@ -233,6 +239,7 @@ public class HRSystem extends JFrame{
       Scanner lineForScan;
       String filteredContent = "";
       boolean isRemoved = false;
+      int count = 0;
       
       removingID = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID that will be removed: "));
       if(removingID < 0)
@@ -241,30 +248,41 @@ public class HRSystem extends JFrame{
       }
       
       Scanner read = new Scanner(new FileInputStream(new File(file)));
+      int comparedID;
+      
       while(read.hasNextLine())
       {
          record = read.nextLine();          
          lineForScan = new Scanner(record);
-         
-         if(lineForScan.hasNext() && Integer.parseInt(lineForScan.next()) != removingID)
-         {
-            filteredContent = filteredContent + "\n" + record; 
-         }
-         else
+        
+         comparedID = Integer.parseInt(lineForScan.next());
+
+        
+         if(comparedID == removingID)
          {
             isRemoved = true;
          }
-         
-         if(isRemoved)
+         else if(count == 0)
          {
-            JOptionPane.showMessageDialog(null, "The record is successfully removed");
-            break;
+            count++;
+            filteredContent = record; 
          }
-         else
+         else 
          {
-            JOptionPane.showMessageDialog(null, "The id does not exist in the system");         
-         }         
+            filteredContent = filteredContent + "\n" + record;          
+         }
+         
+         lineForScan.close();
       }
+      if(isRemoved)
+      {
+         JOptionPane.showMessageDialog(null, "The record is successfully removed");
+      }
+      else
+      {
+         JOptionPane.showMessageDialog(null, "The id does not exist in the system");         
+      }         
+
       read.close();
       
       PrintWriter wr = new PrintWriter(new FileOutputStream(new File(file)));
@@ -288,6 +306,7 @@ public class HRSystem extends JFrame{
       Insurance insurance;
       Department department;
       String msg;      
+      int count = 0;
     
       editingID = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID that will be edited: "));
       if(editingID < 0)
@@ -305,10 +324,16 @@ public class HRSystem extends JFrame{
          {
             matchFound = true;
          }
+         else if(count == 0)
+         {
+            changedContent = record;
+            count++;
+         }
          else
          {
-            changedContent = changedContent + "\n" + record;
+            changedContent = changedContent + "\n" + record;         
          }       
+         lineForScan.close();   
       }
       read.close();
       
@@ -353,7 +378,7 @@ public class HRSystem extends JFrame{
          }
          msg = editingID + " " + salary + " " + fName + " " + lName + " " + isFulltime + " " + insurance.getPlanName() + " " + insurance.getAmount() + " "  + 
                department.getName() + " " + department.getDescription();  
-         changedContent = changedContent + msg;     
+         changedContent = changedContent + "\n" + msg;     
          
       }
       else

@@ -1,13 +1,48 @@
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.File;
+import javax.swing.JFrame;
+import java.io.FileNotFoundException;
 
-public class HRSystem {
+public class HRSystem extends JFrame{
 
     public static void main(String[] args)
     {
+      JFileChooser fc = new JFileChooser();
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt"); 
+      fc.setFileFilter(filter);
       boolean isDone = false;
+      boolean fileFound = true;
       String promptMsg = "HR System\nList of service(1-5)\n1. Add New Employee\n2. Remove Employee\n3. Edit Employee Info\n4. Display All\n5. Exit\n";
-      int chosenService; 
-        
+      int chosenService;
+     
+
+      try
+      {  
+         int returnVal = fc.showOpenDialog(null);
+         if(returnVal == JFileChooser.APPROVE_OPTION) 
+         {
+            File file = fc.getSelectedFile();
+            Scanner read = new Scanner(new FileInputStream(file));
+         }
+         if(returnVal == JFileChooser.CANCEL_OPTION) 
+         {
+            fileFound = false;
+            JOptionPane.showMessageDialog(null, "File is not properly selected. Try it later.");
+         }           
+      }
+      catch(FileNotFoundException e)
+     {
+        fileFound = false;    
+         JOptionPane.showMessageDialog(null, "The file does not exist");
+         
+      } 
+     
+     if(fileFound)   
+     { 
       while(!isDone)
       {
          try{
@@ -46,6 +81,7 @@ public class HRSystem {
             JOptionPane.showMessageDialog(null, e);
          }
       } 
+     }
     }
 
     /** Add employee method if system needs to add a new employee not originally found in text file */

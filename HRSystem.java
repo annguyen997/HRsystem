@@ -9,22 +9,16 @@ public class HRSystem {
         double salary = Integer.parseInt(JOptionPane.showInputDialog("Enter the salary?: "));
         String title = JOptionPane.showInputDialog("Enter the title of position: ");
 
-        /* String insurance = JOptionPane.showInputDialog("What is the insurance of + " firstName + " "
+         /* String insurance = JOptionPane.showInputDialog("What is the insurance of + " firstName + " "
                         + lastName + "?"); */
         /* String department = JOptionPane.showInputDialog("Enter department of + firstName + " " + lastName + ": "); */
 
         /* For part-time employees, this will instead indicate the hourly wage */
         if (status == "Part-Time"){
-            
+            Employee partTimeEmployee = new PartTimeEmployee();
+        } else {
+            Employee employee = new Employee();
         }
-        protected double salary;
-        protected String firstName;
-        protected String lastName;
-        /* Status indicates if the employee is a part-time or full-time employee */
-        protected String status;
-        protected Insurance insurance;
-        protected Department department;
-        protected String title;
 
     };
     public static Employee removeEmployee(String employeeID){ return null;};

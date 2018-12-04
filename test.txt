@@ -1,4 +1,2 @@
-1 1.0 1 1 true PlanA 100 IT Information_Technology
-2 2.0 2 2 true PlanA 100 IT Information_Technology
-3 4.0 4 4 true PlanC 300 BS Business
-5 7.0 7 7 true PlanC 300 BS Business
+3 3.0 3 3 true PlanC 300 HR Human_Resource
+2 4.0 4 4 true PlanB 200 BS Business

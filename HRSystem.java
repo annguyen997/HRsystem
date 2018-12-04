@@ -496,13 +496,19 @@ public class HRSystem extends JFrame{
       //iterator for output.
       Iterator it = employees.iterator(); //iterator object is created for iteration
       String msg = "REPORT: \n";
+      boolean isEmpty = true;
+      
       while(it.hasNext())
       {
-
+         isEmpty = false;
          //down casting to print the data of the users
          msg += (((Employee)it.next()).toString() + "\n");
       }
-      JOptionPane.showMessageDialog(null, msg);
+      
+      if(isEmpty)
+         JOptionPane.showMessageDialog(null, "File is Empty");
+      else
+         JOptionPane.showMessageDialog(null, msg);
     }    
 
 }

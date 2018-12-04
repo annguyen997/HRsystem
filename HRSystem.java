@@ -2,6 +2,11 @@ import javax.swing.JOptionPane;
 
 public class HRSystem {
 
+    public static void main(String[] args)
+    {
+      
+    }
+
     /** Add employee method if system needs to add a new employee not originally found in text file */
     public static void addEmployee(){
         String firstName = JOptionPane.showInputDialog("Enter first name of employee: ");
